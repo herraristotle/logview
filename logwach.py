@@ -17,7 +17,7 @@ async def talk(websocket, log_path):
         await websocket.close()
         return
 
-    tail_contents = tail(f, 5)
+    tail_contents = tail(f, 1000)
     print(tail_contents)
     for line in tail_contents:
         await websocket.send(str(line))
