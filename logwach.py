@@ -5,6 +5,7 @@ import random
 import websockets
 import time
 from pathlib import Path
+import sys
 
 HEARTBEAT_INTERVAL = 15  # seconds
 
@@ -86,7 +87,11 @@ def tail(f, window=20):
     return ''.join(data).splitlines()[-window:]
 
 async def main():
-    log_path = input("Please enter the path to the log file: ")
+    #log_path = input("Please enter the path to the log file: ")
+    if len(sys.argv) < 2:
+        print("Usage: logwatch.py <log_file_path>")
+        sys.exit(1)
+    log_path = sys.argv[1]
     async with websockets.serve(
         lambda ws: talk(ws, log_path),  # Corrected to accept one argument
         "0.0.0.0", 
