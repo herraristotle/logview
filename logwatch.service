@@ -1,0 +1,20 @@
+####################################################################
+# /etc/systemd/system/logwatch.service
+# Description: Logwatch service to monitor log files
+####################################################################
+
+[Unit]
+Description=Logwatch Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/lview/logwatch.py
+Restart=on-failure
+RestartSec=1s
+
+User=dev  # Replace with the user that should run the service
+WorkingDirectory=/opt/lview  # Directory where logwatch.py is located
+
+[Install]
+WantedBy=multi-user.target
